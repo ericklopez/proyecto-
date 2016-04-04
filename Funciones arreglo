@@ -1,0 +1,241 @@
+#ifndef ARREGLODepa_H_
+#define ARREGLODepa_H_
+
+#include "ArregloDepa.h"
+#include "ArregloProducto.c"
+
+/*Función listaInt_ingresar
+	Agrega un valor al final de la lista.
+*/
+NodoDepa* listaDepa_ingresar(NodoDepa *principio){
+	NodoDepa *nodoActual = principio;
+	if(principio==NULL){
+		nodoActual = malloc(sizeof(NodoDepa));
+		fflush(stdin);
+		printf("Ingrese el nombre del Departamento:\t");
+		fgets(nodoActual->Depa,50,stdin );
+		//nodoActual->valor = dato;
+		nodoActual->inicio = NULL;
+		nodoActual->sigDepa = NULL;
+		principio = nodoActual;
+	}else{
+		while(nodoActual->sigDepa != NULL){
+			nodoActual = nodoActual->sigDepa;
+		}
+		NodoDepa *nuevoNodo = malloc(sizeof(NodoDepa));
+		fflush(stdin);
+		printf("Ingrese el nombre del Departamento:\t");
+		fgets(nodoActual->Depa,50,stdin );		
+		nuevoNodo->sigDepa = NULL;
+		nodoActual->sigDepa = nuevoNodo;
+	}
+	return principio;
+}
+
+/*Función listaInt_obtener
+	Obtiene un valor en una posición en especifico de la lista.
+*/
+int listaDepa_obtener(NodoDepa *inicio, unsigned int indice){
+	NodoDepa *nodoActual = inicio;
+	int i = 0;
+	if(inicio==NULL){
+		return 0;
+	}
+	while(i<indice && nodoActual->sigDepa != NULL){
+		nodoActual = nodoActual->sigDepa;
+		i++;
+	}
+
+	//Agregar funcion para imprimir todos los productos
+	listaProducto_imprimir(nodoActual->inicio);
+}
+
+/*Función listaDepa_imprimir
+	Imprime en pantalla todos los datos de la lista
+*/
+void listaDepa_imprimir(NodoDepa *inicio){
+	NodoDepa *nodoActual = inicio;
+	int i =0;
+	while(nodoActual != NULL){
+		printf("%d.\t%s\n",i++,nodoActual->Depa);
+		nodoActual = nodoActual->sigDepa;
+	}
+}
+
+/*
+	Funcion listaDepa_imprimirTodo
+	imprime todo los productos de todos los departamentos
+*/
+void listaDepa_imprimirTodo(NodoDepa *inicio){
+	NodoDepa *nodoActual = inicio;
+	int i =0;
+	while(nodoActual != NULL){
+		printf("%d.\t%s\n",i++,nodoActual->Depa);
+		listaProducto_imprimir(nodoActual->inicio);
+		nodoActual = nodoActual->sigDepa;
+	}
+}
+
+/*Función listaDepa_remover
+	Remueve un valor en una posición en especifico de la lista.
+*/
+NodoDepa* listaDepa_remover(NodoDepa *inicio, unsigned int indice){
+	NodoDepa *nodoActual = inicio;
+	if(inicio==NULL){
+		return NULL;
+	}
+	else if(indice == 0){
+		nodoActual = inicio->sigDepa;
+		listaProducto_borrar(nodoActual->inicio);
+		free(inicio);
+		return nodoActual;
+	}
+	else{
+		NodoDepa *anterior = inicio;
+		int i = 0;
+		while(i<indice && nodoActual->sigDepa != NULL){
+			anterior = nodoActual;
+			nodoActual = nodoActual->sigDepa;
+			i++;
+		}
+		anterior->sigDepa = nodoActual->sigDepa;
+		listaProducto_borrar(nodoActual->inicio);
+		free(nodoActual);
+		if(i==0){
+			return NULL;
+		}
+	}
+	return inicio;
+}
+
+/*Función listaDepa_borrar
+	Libera la memoria de toda la lista
+*/
+NodoDepa* listaDepa_borrar(NodoDepa *inicio){
+	if(inicio==NULL){
+		return NULL;
+	}
+	NodoDepa *nodoActual = inicio;
+	NodoDepa *nodoSig = inicio->sigDepa;
+	while(nodoSig != NULL){
+		free(nodoActual);
+		nodoActual = nodoSig;
+		nodoSig = nodoActual->sigDepa;
+	}
+	free(nodoActual);
+	return NULL;
+}
+
+/*
+	Funcion listaDepa_Comprar
+	para comprar alguna cantidad determinada de algun articulo 
+*/
+int listaDepa_comprar(NodoDepa *tienda, int depa, int articulo, int numcantidad){
+	NodoDepa *nodoActual = tienda;
+	int i = 0,j=0;
+	if(tienda==NULL){
+		return 0;
+	}
+	while(i<depa && nodoActual->sigDepa != NULL){
+		nodoActual = nodoActual->sigDepa;
+		i++;
+	}
+	NodoProducto *nodoArticulo = nodoActual->inicio;
+	while(j<articulo && nodoArticulo->sigProducto != NULL){
+		nodoArticulo = nodoArticulo->sigProducto;
+		j++;
+	}
+
+	if((nodoArticulo->cantidad)<(numcantidad)){
+		printf("Operacion no valida\n");
+	}else{
+		nodoArticulo->cantidad = nodoArticulo->cantidad - numcantidad;
+	}
+}
+/*Funcion listaDepa_agregarProd
+	funcion para agregar un producto a algun departamento
+*/
+int listaDepa_agregarProd(NodoDepa *inicio, int indice){
+	NodoDepa *nodoActual = inicio;
+	int i = 0;
+	if(inicio==NULL){
+		return 0;
+	}
+	while(i<indice && nodoActual->sigDepa != NULL){
+		nodoActual = nodoActual->sigDepa;
+		i++;
+	}
+
+	listaProducto_ingresar(nodoActual->inicio);
+}
+
+/*Funcion listaDepa_eliminarProd
+	funcion para elimina un producto a algun departamento
+*/
+int listaDepa_eliminarProd(NodoDepa *inicio, int indice, int producto){
+	NodoDepa *nodoActual = inicio;
+	int i = 0;
+	if(inicio==NULL){
+		return 0;
+	}
+	while(i<indice && nodoActual->sigDepa != NULL){
+		nodoActual = nodoActual->sigDepa;
+		i++;
+	}
+	listaProducto_remover(nodoActual->inicio,producto);
+}
+
+/*FuncionlistaDepa_cambiarPrecio
+	funcion para cambiar el precio
+*/
+int listaDepa_cambiarPrecio(NodoDepa *tienda,int depa,int producto){
+	NodoDepa *nodoActual = tienda;
+	int i = 0,j=0;
+
+	if(tienda==NULL){
+		return 0;
+	}
+	while(i<depa && nodoActual->sigDepa != NULL){
+		nodoActual = nodoActual->sigDepa;
+		i++;
+	}
+	NodoProducto *nodoArticulo = nodoActual->inicio;
+	while(j<producto && nodoArticulo->sigProducto != NULL){
+		nodoArticulo = nodoArticulo->sigProducto;
+		j++;
+	}
+	printf("Ingrese nuevo precio:\t");
+	fflush(stdin);
+	scanf("%lf",&nodoArticulo->precio);
+}
+
+/*Funcion listaDepa_agregarInventario
+	funcion para agregar al inventario
+*/
+
+int listaDepa_agregarInventario(NodoDepa *tienda,int depa,int producto){
+NodoDepa *nodoActual = tienda;
+	int i = 0,j=0,cant;
+
+	if(tienda==NULL){
+		return 0;
+	}
+	while(i<depa && nodoActual->sigDepa != NULL){
+		nodoActual = nodoActual->sigDepa;
+		i++;
+	}
+	NodoProducto *nodoArticulo = nodoActual->inicio;
+	while(j<producto && nodoArticulo->sigProducto != NULL){
+		nodoArticulo = nodoArticulo->sigProducto;
+		j++;
+	}
+	printf("Ingrese el numero de productos a agregar:\t");
+	fflush(stdin);
+	scanf("%d",&cant);
+	if(cant > 0){
+	nodoArticulo->cantidad = nodoArticulo->cantidad + cant;
+	}else{
+		printf("Cantidad no posible agregar");
+	}
+}
+#endif
