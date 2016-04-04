@@ -1,0 +1,50 @@
+
+#ifndef LISTALIGPROD_H_
+#define LISTALIGPROD_H_
+
+#include "Arreglos.h"
+//#include <stdio.h>
+//#include <stdlib.h>
+
+/*Estructura nodoInt
+	Guarda un nodo para una lista ligada de enteros.
+		valor - Valor almacenado
+		sig   - Apuntador al siguiente nodo de la lista
+
+typedef struct nodoInt {
+   int valor;
+   struct nodoInt *sig;
+} NodoInt;
+
+
+/*Función listaInt_ingresar
+	Agrega un valor al final de la lista.
+*/
+void listaProducto_ingresar(NodoProducto *inicio);
+
+/*Función listaInt_ingresarEn
+	Agrega un valor en una posición en especifico de la lista.
+*/
+//NodoProducto* listaProducto_ingresarEn(NodoProducto *inicio, int dato, unsigned int indice);
+
+/*Función listaInt_obtener
+	Obtiene un valor en una posición en especifico de la lista.
+*/
+int listaProducto_obtener(NodoProducto *inicio, unsigned int indice);
+
+/*Función listaInt_imprimir
+	Imprime en pantalla todos los datos de la lista
+*/
+void listaProducto_imprimir(NodoProducto *inicio);
+
+/*Función listaInt_remover
+	Remueve un valor en una posición en especifico de la lista.
+*/
+NodoProducto* listaProducto_remover(NodoProducto *inicio, unsigned int indice);
+
+/*Función listaInt_borrar
+	Libera la memoria de toda la lista
+*/
+NodoProducto* listaProducto_borrar(NodoProducto *inicio);
+
+#endif // LISTALIGPROD_H_
