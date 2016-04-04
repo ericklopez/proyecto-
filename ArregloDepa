@@ -1,0 +1,98 @@
+#ifndef LISTALIGDEPA_H_
+#define LISTALIGDEPA_H_
+#include "Arreglos.h"
+#include "ArregloProducto.h"
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct nodoDepa{
+   char Depa[50];
+   struct NodoProducto *inicio;
+   struct NodoDepa *sigDepa;
+} NodoDepa;
+
+typedef struct nodoProducto {
+	char producto[50];
+	float precio;
+	int cantidad;
+	struct NodoProducto *sigProducto;
+} NodoProducto;
+
+
+//#include <stdio.h>
+//#include <stdlib.h>
+
+/*Estructura nodoInt
+	Guarda un nodo para una lista ligada de enteros.
+		valor - Valor almacenado
+		sig   - Apuntador al siguiente nodo de la lista
+*/
+/*typedef struct nodoInt {
+   int valor;
+   struct nodoInt *sig;
+} NodoInt;
+
+
+/*Función listaInt_ingresar
+	Agrega un valor al final de la lista.
+*/
+NodoDepa* listaDepa_ingresar(NodoDepa *principio);
+
+/*Función listaInt_ingresarEn
+	Agrega un valor en una posición en especifico de la lista.
+*/
+//NodoDepa* listaDepa_ingresarEn(NodoDepa *inicio, int dato, unsigned int indice);
+
+/*Función listaInt_obtener
+	Obtiene un valor en una posición en especifico de la lista.
+*/
+int listaDepa_obtener(NodoDepa *inicio, unsigned int indice);
+
+/*Función listaInt_imprimir
+	Imprime en pantalla todos los datos de la lista
+*/
+void listaDepa_imprimir(NodoDepa *inicio);
+
+/*
+	Funcion listaDepa_imprimirTodo
+	imprime todo los productos de todos los departamentos
+*/
+void listaDepa_imprimirTodo(NodoDepa *inicio);
+/*Función listaInt_remover
+	Remueve un valor en una posición en especifico de la lista.
+*/
+NodoDepa* listaDepa_remover(NodoDepa *inicio, unsigned int indice);
+
+/*Función listaInt_borrar
+	Libera la memoria de toda la lista
+*/
+NodoDepa* listaDepa_borrar(NodoDepa *inicio);
+
+/*
+	Funcion listaDepa_Comprar
+	para comprar alguna cantidad determinada de algun articulo 
+*/
+int listaDepa_comprar(NodoDepa *tienda, int depa, int articulo, int numcantidad);
+
+/*Funcion listaDepa_agregarProd
+	funcion para agregar un producto a algun departamento
+*/
+int listaDepa_agregarProd(NodoDepa *inicio, int indice);
+
+/*Funcion listaDepa_eliminarProd
+	funcion para elimina un producto a algun departamento
+*/
+int listaDepa_eliminarProd(NodoDepa *inicio, int indice, int producto);
+
+/*FuncionlistaDepa_cambiarPrecio
+	funcion para cambiar el precio
+*/
+int listaDepa_cambiarPrecio(NodoDepa *tienda,int depa,int producto);
+
+/*Funcion listaDepa_agregarInventario
+	funcion para agregar al inventario
+*/
+int listaDepa_agregarInventario(NodoDepa *tienda,int depa,int producto);
+
+#endif // LISTALIGINT_H_
