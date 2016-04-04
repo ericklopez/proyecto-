@@ -1,0 +1,19 @@
+#ifndef ARREGLO_H_
+#define ARREGLO_H_
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct nodoDepa{
+   char Depa[50];
+   struct nodoProducto *inicio;
+   struct nodoDepa *sigDepa;
+} NodoDepa;
+
+typedef struct nodoProducto {
+	char producto[50];
+	double precio;
+	int cantidad;
+	struct nodoProducto *sigProducto;
+} NodoProducto;
+#endif
