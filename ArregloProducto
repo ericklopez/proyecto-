@@ -1,0 +1,128 @@
+#ifndef ARREGLOprod_H_
+#define ARREGLOprod_H_
+
+#include "ArregloProducto.h"
+
+/*Función listaInt_ingresar
+	Agrega un valor al final de la lista.
+*/
+void listaProducto_ingresar(NodoProducto *inicio){
+	NodoProducto *nodoActual = inicio;
+	if(inicio==NULL){
+		nodoActual = malloc(sizeof(NodoProducto));
+		fflush(stdin);
+		printf("Ingrese el nombre del Producto:\t");
+		fgets(nodoActual->producto,50,stdin);
+		fflush(stdin);
+		printf("Ingrese el precio:\t");
+		scanf("%lf",&nodoActual->precio);
+		fflush(stdin);
+		printf("Ingrese la cantidad inicial en inventario:\t");
+		scanf("%d",&nodoActual->cantidad);
+		//nodoActual->valor = dato;
+		nodoActual->sigProducto = NULL;
+		inicio = nodoActual;
+	}
+	else{
+		while(nodoActual->sigProducto != NULL){
+			nodoActual = nodoActual->sigProducto;
+		}
+		NodoProducto *nuevoNodo = malloc(sizeof(NodoProducto));
+		fflush(stdin);
+		printf("Ingrese el nombre del Producto:\t");
+		fgets(nodoActual->producto,50,stdin);
+		fflush(stdin);
+		printf("Ingrese el precio:\t");
+		scanf("%lf",&nodoActual->precio);
+		fflush(stdin);
+		printf("Ingrese la cantidad inicial en inventario:\t");
+		scanf("%d",&nodoActual->cantidad);
+		nuevoNodo->sigProducto = NULL;
+		nodoActual->sigProducto = nuevoNodo;
+	}
+}
+
+
+/*Función listaInt_obtener
+	Obtiene un valor en una posición en especifico de la lista.
+*/
+int listaProducto_obtener(NodoProducto *inicio, unsigned int indice){
+	NodoProducto *nodoActual = inicio;
+	int i = 0;
+	if(inicio==NULL){
+		return 0;
+	}
+	while(i<indice && nodoActual->sigProducto != NULL){
+		nodoActual = nodoActual->sigProducto;
+		i++;
+	}
+	printf("Producto:\t%s\n",nodoActual->producto);
+	printf("Precio:\t%f\n",nodoActual->precio);
+	printf("Cantidad:\t%d\n",nodoActual->cantidad);
+	return 1;
+}
+
+/*Función listaInt_imprimir
+	Imprime en pantalla todos los datos de la lista
+*/
+void listaProducto_imprimir(NodoProducto *inicio){
+	NodoProducto *nodoActual = inicio;
+	int i =0;
+		printf("\tProducto\tPrecio\tCantidad\n");
+	while(nodoActual != NULL){
+		printf("%d\t%s\t",i+1, nodoActual->producto);
+		printf("%f\t",nodoActual->precio);
+		printf("%d\n",nodoActual->cantidad);
+		nodoActual = nodoActual->sigProducto;
+	}
+	printf("\n\n\n");
+}
+
+/*Función listaInt_remover
+	Remueve un valor en una posición en especifico de la lista.
+*/
+NodoProducto* listaProducto_remover(NodoProducto *inicio, unsigned int indice){
+	NodoProducto *nodoActual = inicio;
+	if(inicio==NULL){
+		return NULL;
+	}
+	else if(indice == 0){
+		nodoActual = inicio->sigProducto;
+		free(inicio);
+		return nodoActual;
+	}
+	else{
+		NodoProducto *anterior = inicio;
+		int i = 0;
+		while(i<indice && nodoActual->sigProducto != NULL){
+			anterior = nodoActual;
+			nodoActual = nodoActual->sigProducto;
+			i++;
+		}
+		anterior->sigProducto = nodoActual->sigProducto;
+		free(nodoActual);
+		if(i==0){
+			return NULL;
+		}
+	}
+	return inicio;
+}
+
+/*Función listaInt_borrar
+	Libera la memoria de toda la lista
+*/
+NodoProducto* listaProducto_borrar(NodoProducto *inicio){
+	if(inicio==NULL){
+		return NULL;
+	}
+	NodoProducto *nodoActual = inicio;
+	NodoProducto *nodoSig = inicio->sigProducto;
+	while(nodoSig != NULL){
+		free(nodoActual);
+		nodoActual = nodoSig;
+		nodoSig = nodoActual->sigProducto;
+	}
+	free(nodoActual);
+	return NULL;
+}
+#endif
